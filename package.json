@@ -1,0 +1,20 @@
+{
+  "name": "my-next-app",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "body-parser": "^1.x",
+    "formidable": "^3.5.2",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.x",
+    "multer": "^1.x",
+    "next": "^13.x",
+    "next-connect": "^1.x",
+    "react": "^18.x",
+    "react-dom": "^18.x"
+  }
+}
