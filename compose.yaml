@@ -1,0 +1,14 @@
+services:
+  app:
+    build: { context: ., target: dev }
+    ports: ["8080:80"]
+    environment:
+      SERVER_NAME: ":80"
+      APP_ENV: dev
+      DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data.db"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - dev_data:/data
+volumes:
+  dev_data:

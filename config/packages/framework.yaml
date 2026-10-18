@@ -1,0 +1,27 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    trusted_proxies: '%env(default::TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+
+    trusted_hosts: '%env(default::TRUSTED_HOSTS)%'
+
+    serializer:
+        mapping:
+            paths: ['%kernel.project_dir%/config/serializer']
+
+    exceptions:
+        App\Domain\DomainError:
+            log_level: info
+        Doctrine\ORM\OptimisticLockException:
+            log_level: info
+        Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException:
+            log_level: info
+        Symfony\Component\HttpKernel\Exception\NotFoundHttpException:
+            log_level: info
+        ApiPlatform\Validator\Exception\ValidationException:
+            log_level: info
+
+when@test:
+    framework:
+        test: true

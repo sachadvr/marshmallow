@@ -1,7 +1,0 @@
-services:
-  draganddrop:
-    build: .
-    ports:
-      - "6000:6000"
-    networks:
-      - app-network

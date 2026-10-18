@@ -1,0 +1,74 @@
+{
+	skip_install_trust
+	frankenphp {
+		worker {
+			file /app/public/index.php
+			num {$FRANKENPHP_WORKERS:4}
+			{$FRANKENPHP_WORKER_EXTRA}
+		}
+	}
+}
+
+{$SERVER_NAME::80} {
+	root /app/public
+
+	@compressible not path /.well-known/mercure*
+	encode @compressible zstd br gzip
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy same-origin
+		Cross-Origin-Opener-Policy same-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+		-Server
+		-X-Powered-By
+	}
+
+	@https protocol https
+	header @https Strict-Transport-Security "max-age=31536000"
+
+	mercure {
+		anonymous
+		transport local
+		heartbeat 25s
+	}
+
+	@upload path /api/files
+	@notUpload not path /api/files
+	@uploadTooLarge {
+		path /api/files
+		expression `{http.request.header.Content-Length} != "" && int({http.request.header.Content-Length}) > 105906176`
+	}
+	@apiBodyTooLarge {
+		path /api/*
+		not path /api/files
+		expression `{http.request.header.Content-Length} != "" && int({http.request.header.Content-Length}) > 4194304`
+	}
+
+	handle /api/* {
+		route {
+			respond @uploadTooLarge 413
+			respond @apiBodyTooLarge 413
+			request_body @upload {
+				max_size 101MiB
+			}
+			request_body @notUpload {
+				max_size 4MiB
+			}
+			rewrite * /index.php
+			php
+		}
+	}
+
+	handle /build/* {
+		header Cache-Control "public, max-age=31536000, immutable"
+		file_server {
+			hide .vite
+		}
+	}
+
+	handle {
+		header X-Frame-Options DENY
+		php_server
+	}
+}

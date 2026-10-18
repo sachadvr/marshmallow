@@ -1,4 +1,40 @@
-node_modules
-dist
-.next
-.vscode
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log
+*.sw?
+
+/node_modules/
+.vitest
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> pentatrion/vite-bundle ###
+/public/build/
+###< pentatrion/vite-bundle ###
+
+###> marshmallow ###
+# Fichiers de configuration du projet, ignorés par le .gitignore global du poste.
+!/.env
+!/.php-cs-fixer.dist.php
+!/config/packages/framework.yaml
+###< marshmallow ###
