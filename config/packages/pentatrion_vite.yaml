@@ -1,0 +1,10 @@
+pentatrion_vite:
+    throw_on_missing_entry: true
+
+when@prod:
+    pentatrion_vite:
+        cache: true
+
+when@test:
+    pentatrion_vite:
+        public_directory: tests/fixtures/vite

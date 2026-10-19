@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+parameters:
+    env(FILES_DIR): '%kernel.project_dir%/var/files'
+    default_files_storage_dsn: 'local://%env(FILES_DIR)%'
+    app.page_csp: "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+
+    App\Storage\FileStorage:
+        factory: ['@App\Storage\FileStorageResolver', 'fromDsn']
+        arguments: ['%env(default:default_files_storage_dsn:FILES_STORAGE_DSN)%']
+
+    ApiPlatform\Metadata\Property\Factory\ClassLevelAttributePropertyNameCollectionFactory:
+        decorates: api_platform.metadata.property.name_collection_factory
+        decoration_priority: -5
+        arguments: ['@.inner']
+
+when@dev:
+    parameters:
+        app.page_csp: ~
+
+when@test:
+    services:
+        _defaults:
+            autowire: true
+            autoconfigure: true
+
+        App\Tests\Support\UpdateRecorder:
+            public: true
+
+        Symfony\Component\Mercure\Jwt\StaticTokenProvider:
+            arguments: ['x']
+
+        mercure.hub.default:
+            class: Symfony\Component\Mercure\MockHub
+            arguments:
+                $url: 'https://hub.test/.well-known/mercure'
+                $jwtProvider: '@Symfony\Component\Mercure\Jwt\StaticTokenProvider'
+                $publisher: '@App\Tests\Support\UpdateRecorder'
+                $publicUrl: '/.well-known/mercure'
+
+        App\Tests\Support\TextCollision:
+            public: true
+            tags: [{ name: doctrine.event_listener, event: onFlush }]
+
+        App\Tests\Support\FailingPostFlush:
+            public: true
+            tags: [{ name: doctrine.event_listener, event: postFlush }]

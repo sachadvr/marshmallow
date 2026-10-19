@@ -1,0 +1,6 @@
+App\Entity\File:
+    attributes:
+        inlineImage:
+            groups: ['file:read']
+        url:
+            groups: ['file:read']

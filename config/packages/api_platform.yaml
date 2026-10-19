@@ -1,0 +1,25 @@
+api_platform:
+    title: Marshmallow
+    version: 1.0.0
+    formats:
+        json: ['application/json']
+    docs_formats:
+        jsonopenapi: ['application/vnd.openapi+json']
+        html: ['text/html']
+    error_formats:
+        jsonproblem: ['application/problem+json']
+    exception_to_status:
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+        ApiPlatform\Metadata\Exception\InvalidArgumentException: 400
+        Doctrine\ORM\OptimisticLockException: 409
+    mercure:
+        enabled: true
+    handle_symfony_errors: true
+    enable_docs: '%kernel.debug%'
+    enable_entrypoint: '%kernel.debug%'
+    enable_swagger_ui: '%kernel.debug%'
+    enable_re_doc: false
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Origin']
