@@ -1,0 +1,47 @@
+{
+  "name": "marshmallow",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc -b",
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "api:types": "openapi-typescript assets/api/generated/openapi.json -o assets/api/generated/schema.d.ts"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "3.2.2",
+    "@symfony/ux-vue": "3.6.0",
+    "fast-diff": "^1.3.0",
+    "vue": "^3.5.44",
+    "yjs": "^13.6.33"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "@vue/eslint-config-prettier": "^10.2",
+    "@vue/eslint-config-typescript": "^14.9",
+    "@vue/test-utils": "^2.5.1",
+    "@vue/tsconfig": "^0.9.1",
+    "eslint": "^10.13",
+    "eslint-plugin-vue": "^10.11",
+    "happy-dom": "^21.0.3",
+    "jiti": "^2.7.0",
+    "openapi-typescript": "7.13.0",
+    "prettier": "^3.9.10",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0",
+    "typescript-eslint": "^8.71",
+    "vite": "^8.3.4",
+    "vite-plugin-symfony": "8.2.4",
+    "vitest": "^5.0.5",
+    "vue-tsc": "^3.3.13"
+  }
+}
