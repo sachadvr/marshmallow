@@ -1,0 +1,25 @@
+@import 'tailwindcss' source('..');
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --animate-appearfromthetop: appearfromthetop 1s forwards;
+
+  @keyframes appearfromthetop {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply grid h-dvh place-items-center bg-white font-sans text-black md:h-screen;
+  }
+
+  #app {
+    display: contents;
+  }
+}
