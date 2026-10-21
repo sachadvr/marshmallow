@@ -121,7 +121,7 @@ La publication passe par `mercure_publish()`, en processus, sans JWT.
 
 Trois points d'extension, chacun adossé à un mécanisme du container :
 
-- **Politiques de téléchargement** (`src/Http/Download/`) : la disposition et le type MIME d'un téléchargement suivent une suite de règles ordonnées — contenu actif → opaque, image raster → inline, reste → attachment. Une classe `#[AsDownloadPolicy(priority: N)]` implémentant `DownloadPolicy` s'insère dans la chaîne, la première qui `supports()` gagne. `DownloadPolicyPass` casse la compilation s'il n'y a pas exactement un fallback, s'il n'est pas de priorité la plus basse, ou si une classe taguée n'implémente pas l'interface.
+- **Politiques de téléchargement** (`src/Http/Download/`) : la disposition et le type MIME d'un téléchargement suivent une suite de règles ordonnées : contenu actif → opaque, image raster → inline, reste → attachment. Une classe `#[AsDownloadPolicy(priority: N)]` implémentant `DownloadPolicy` s'insère dans la chaîne, la première qui `supports()` gagne. `DownloadPolicyPass` casse la compilation s'il n'y a pas exactement un fallback, s'il n'est pas de priorité la plus basse, ou si une classe taguée n'implémente pas l'interface.
 - **Stockage** (`src/Storage/`) : le backend est un choix d'exploitation, pas du code. `FILES_STORAGE_DSN=local:///data/files` choisit la factory via un locator indexé par scheme ; `FileStorageFactoryPass` refuse deux factories pour le même scheme. Ajouter S3 revient à écrire `S3FileStorage` et `#[AsFileStorageFactory(scheme: 's3')]`.
 - **Publication temps réel** (`src/Realtime/`) : `BestEffortHub` décore `mercure.hub.default` et avale les erreurs du hub. API Platform publie au `postFlush` sans catch, donc une panne du hub transformerait une écriture déjà validée en 500.
 
@@ -138,4 +138,4 @@ Trois points d'extension, chacun adossé à un mécanisme du container :
 
 ## Licence
 
-Projet perso, `proprietary` dans `composer.json` — pas de licence publique.
+Projet perso, `proprietary` dans `composer.json`, pas de licence publique.
